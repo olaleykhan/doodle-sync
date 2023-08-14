@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChromePicker as ColorPicker, SketchPicker, ColorChangeHandler } from 'react-color';
+import { SketchPicker, ColorChangeHandler } from 'react-color';
 
 interface Props {
     color: string
@@ -7,7 +7,7 @@ interface Props {
 }
 const ChromePicker: React.FC<Props> = ({ color, onChange }) => {
     return (
-        <ColorPicker color={color} onChangeComplete={onChange} />
+        <SketchPicker color={color} onChangeComplete={onChange} />
     )
 }
 

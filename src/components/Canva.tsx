@@ -35,8 +35,6 @@ const FabricCanvas = () => {
         const newFabricCanvas = new fabric.Canvas(canvasRef.current, {
             isDrawingMode: true,
         });
-        newFabricCanvas.freeDrawingBrush.width = lineWidth;
-        newFabricCanvas.freeDrawingBrush.color = drawingColor;
         setFabricCanvas(newFabricCanvas);
 
 
@@ -64,19 +62,6 @@ const FabricCanvas = () => {
             <Grid item xs={12} md={3}>
                 <Box>
                     <Typography variant="h3">Controls</Typography>
-                    <FormControl fullWidth>
-                        <InputLabel id="drawing-color-label">Drawing Color</InputLabel>
-                        <Select
-                            labelId="drawing-color-label"
-                            value={drawingColor}
-                            onChange={(e) => setDrawingColor(e.target.value as string)}
-                        >
-                            <MenuItem value="black">Black</MenuItem>
-                            <MenuItem value="red">Red</MenuItem>
-                            <MenuItem value="blue">Blue</MenuItem>
-                            {/* Add more colors as needed */}
-                        </Select>
-                    </FormControl>
 
                     <ChromePicker color={drawingColor} onChange={handleColorChange} />
                     <Typography gutterBottom>Line Width</Typography>
@@ -87,7 +72,7 @@ const FabricCanvas = () => {
                         step={1}
                         onChange={(_, newValue) => setLineWidth(newValue as number)}
                     />
-                    <Button onClick={() => setIsDrawingMode(!isDrawingMode)}>
+                    <Button variant='outlined' onClick={() => setIsDrawingMode(!isDrawingMode)}>
                         {isDrawingMode ? 'Disable Drawing' : 'Enable Drawing'}
                     </Button>
 
