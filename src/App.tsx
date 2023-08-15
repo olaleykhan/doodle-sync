@@ -1,12 +1,6 @@
 import React from 'react';
-import Canva from './components/Canva';
+import Canva from 'components/Canva';
 
-function App() {
-	return (
-		<>
-			<Canva />
-		</>
-	);
-}
+const App: React.FC = () => <Canva />;
 
 export default App;

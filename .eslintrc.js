@@ -7,6 +7,9 @@ module.exports = {
 		'eslint:recommended',
 		'xo',
 		'plugin:react/recommended',
+		'plugin:jest-dom/recommended',
+		'react-app/jest',
+		'plugin:testing-library/react',
 	],
 	overrides: [
 		{
@@ -36,6 +39,8 @@ module.exports = {
 	},
 	plugins: [
 		'react',
+		'jest-dom',
+		'testing-library',
 	],
 	rules: {
 		// 'import/no-relative-parent-imports': 'error',
