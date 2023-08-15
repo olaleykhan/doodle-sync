@@ -4,14 +4,20 @@ module.exports = {
 		es2021: true,
 	},
 	extends: [
-		'eslint:recommended',
+
 		'xo',
 		'plugin:react/recommended',
 		'plugin:jest-dom/recommended',
 		'react-app/jest',
-		'plugin:testing-library/react',
 	],
-	overrides: [
+	'overrides': [
+		{
+			files: ['**/*.ts', '**/*.tsx'],
+			parser: '@typescript-eslint/parser',
+			parserOptions: {
+				project: './tsconfig.json',
+			},
+		},
 		{
 			env: {
 				node: true,
@@ -23,28 +29,47 @@ module.exports = {
 				sourceType: 'script',
 			},
 		},
-		{
-			extends: [
-				'xo-typescript',
-			],
-			files: [
-				'*.ts',
-				'*.tsx',
-			],
-		},
 	],
-	parserOptions: {
-		ecmaVersion: 'latest',
-		sourceType: 'module',
+	'parserOptions': {
+		'ecmaVersion': 'latest',
+		'sourceType': 'module',
+		'projext': './tsconfig.json',
 	},
 	plugins: [
 		'react',
+		"@typescript-eslint",
 		'jest-dom',
-		'testing-library',
 	],
 	rules: {
 		// 'import/no-relative-parent-imports': 'error',
 		'react/react-in-jsx-scope': 'off',
-		'@typescript-eslint/no-unused-vars': ['error'],
+		'@typescript-eslint/no-unused-vars': 'error',
+		"@typescript-eslint/no-namespace": "off",
+		"@typescript-eslint/ban-types": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "error",
+		"@typescript-eslint/no-explicit-any": "error",
+		"@typescript-eslint/no-shadow": "error",
+		"@typescript-eslint/no-use-before-define": [
+			"error"
+		],
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{
+				"ignoreRestSiblings": true
+			}
+		],
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{
+				"checksConditionals": false,
+				"checksVoidReturn": {
+					"arguments": false,
+					"attributes": false
+				}
+			}
+		],
+
+
+
 	},
 };

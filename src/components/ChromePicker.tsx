@@ -13,8 +13,8 @@ const ChromePicker: React.FC<Props> = ({color, onChange}) => {
 		setPickerOpen(!pickerOpen);
 	};
 
-	const handleColorChangeComplete = (color: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(color, event);
+	const handleColorChangeComplete = (c: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
+		onChange(c, event);
 		setPickerOpen(false); // Close the picker after selection
 	};
 
@@ -22,14 +22,16 @@ const ChromePicker: React.FC<Props> = ({color, onChange}) => {
 		<Box sx={{
 			position: 'relative',
 		}} >
-			<Box sx={{
-				width: '3rem',
-				height: '3rem',
-				borderRadius: '50%',
-				background: color,
-				cursor: 'pointer',
+			<Box
+				data-testid='pen-color-display'
+				sx={{
+					width: '3rem',
+					height: '3rem',
+					borderRadius: '50%',
+					background: color,
+					cursor: 'pointer',
 
-			}} onClick={handleColorClick} />
+				}} onClick={handleColorClick} />
 			{
 				pickerOpen && (
 					<ClickAwayListener onClickAway={() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Canva from 'components/Canva';
+import Canva from 'pages/canva/Canva';
 
 const App: React.FC = () => <Canva />;
 

@@ -1,10 +1,10 @@
 import React, {useRef, useEffect, useState} from 'react';
 import {fabric} from 'fabric';
-import {Card, Grid, Box, Typography, Slider, Button} from '@mui/material';
-import ChromePicker from 'components/ChromePicker';
+import {Card, Grid} from '@mui/material';
 import {type ColorChangeHandler} from 'react-color';
+import Controls from './components/Controls';
 
-const FabricCanvas = () => {
+const FabricCanvas:React.FC = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | undefined>(undefined);
 	const [drawingColor, setDrawingColor] = useState('black');
@@ -64,31 +64,15 @@ const FabricCanvas = () => {
 				</Card>
 			</Grid>
 			<Grid item xs={12} md={3}>
-				<Box>
-					<Typography variant='h3'>Controls</Typography>
-
-					<ChromePicker color={drawingColor} onChange={handleColorChange} />
-					<Typography gutterBottom>Line Width</Typography>
-					<Slider
-						value={lineWidth}
-						min={1}
-						max={50}
-						step={1}
-						onChange={(_, newValue) => {
-							setLineWidth(newValue as number);
-						}}
-					/>
-					<Button variant='outlined' onClick={() => {
-						setIsDrawingMode(!isDrawingMode);
-					}} sx={{
-						mr: 2,
-					}} >
-						{isDrawingMode ? 'Disable Drawing' : 'Enable Drawing'}
-					</Button>
-
-					<Button variant='contained' color='secondary' onClick={handleClearCanvas}> Clear Canvas </Button>
-
-				</Box>
+				<Controls
+					lineWidth={lineWidth}
+					setLineWidth={setLineWidth}
+					isDrawingMode={isDrawingMode}
+					setIsDrawingMode={setIsDrawingMode}
+					handleClearCanvas={handleClearCanvas}
+					handleColorChange={handleColorChange}
+					drawingColor={drawingColor}
+				/>
 			</Grid >
 		</Grid >
 
