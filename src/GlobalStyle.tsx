@@ -1,9 +1,8 @@
-import { Global, css } from '@emotion/react';
+import {Global, css} from '@emotion/react';
 
-const GlobalStyle: React.FC = () => {
-  return (
-    <Global
-      styles={css`
+const GlobalStyle: React.FC = () => (
+	<Global
+		styles={css`
         html {
           font-size: 10px;
           @media only screen and (min-width: 1600px) {
@@ -42,8 +41,7 @@ const GlobalStyle: React.FC = () => {
         scrollbar-width: thin;
         scrollbar-color: #888 #f5f5f7; 
       `}
-    />
-  );
-};
+	/>
+);
 
 export default GlobalStyle;
