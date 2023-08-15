@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { SketchPicker, ColorChangeHandler, ColorResult } from 'react-color';
 import { Box } from '@mui/system';
+import { ClickAwayListener } from '@mui/material';
 
 interface Props {
     color: string
@@ -22,24 +23,26 @@ const ChromePicker: React.FC<Props> = ({ color, onChange }) => {
             position: 'relative',
         }} >
             <Box sx={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '18px',
+                width: '3rem',
+                height: '3rem',
+                borderRadius: '50%',
                 background: color,
                 cursor: 'pointer',
 
             }} onClick={handleColorClick} />
             {
                 pickerOpen && (
+                    <ClickAwayListener onClickAway={() => setPickerOpen(false)}>
                     <Box sx={{
                         position: 'absolute',
                         zIndex: 2,
                         top: '40px',
-                        right: 0,
+                            left: 0,
 
                     }} >
                         <SketchPicker color={color} onChangeComplete={handleColorChangeComplete} />
                     </Box>
+                    </ClickAwayListener>
                 )
             }
         </Box>

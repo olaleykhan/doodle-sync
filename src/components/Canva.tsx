@@ -15,6 +15,12 @@ const FabricCanvas = () => {
     const handleColorChange: ColorChangeHandler = (color, event) => {
         setDrawingColor(color.hex);
     };
+    const handleClearCanvas = () => {
+        if (fabricCanvas) {
+            fabricCanvas.clear();
+        }
+    };
+
 
     useEffect(() => {
         const updateCanvasSize = () => {
@@ -72,9 +78,13 @@ const FabricCanvas = () => {
                         step={1}
                         onChange={(_, newValue) => setLineWidth(newValue as number)}
                     />
-                    <Button variant='outlined' onClick={() => setIsDrawingMode(!isDrawingMode)}>
+                    <Button variant='outlined' onClick={() => setIsDrawingMode(!isDrawingMode)} sx={{
+                        mr: 2
+                    }} >
                         {isDrawingMode ? 'Disable Drawing' : 'Enable Drawing'}
                     </Button>
+
+                    <Button variant="contained" color="secondary" onClick={handleClearCanvas}> Clear Canvas </Button>
 
                 </Box>
             </Grid >
