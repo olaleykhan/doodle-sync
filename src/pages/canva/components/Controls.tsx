@@ -7,9 +7,11 @@ interface Props {
   lineWidth: number;
   drawingColor: string;
   handleColorChange: ColorChangeHandler;
+// Disable-next-line no-unused-vars
   setLineWidth: (lineWidth: number) => void;
   handleClearCanvas: () => void;
   isDrawingMode: boolean;
+// @eslint  Disable-next-line no-unused-vars
   setIsDrawingMode: (isDrawingMode: boolean) => void;
 }
 const Controls:FC<Props> = ({
@@ -21,8 +23,9 @@ const Controls:FC<Props> = ({
 	isDrawingMode,
 	setIsDrawingMode,
 }) => {
-	const handleDrawingModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setIsDrawingMode(!event.target.checked);
+	const handleDrawingModeChange = () => {
+		// SetIsDrawingMode((prev:boolean) => !prev);
+		setIsDrawingMode(!isDrawingMode);
 	};
 
 	return (

@@ -41,9 +41,10 @@ module.exports = {
 		'jest-dom',
 	],
 	rules: {
+		// disable capitalize comments
 		// 'import/no-relative-parent-imports': 'error',
 		'react/react-in-jsx-scope': 'off',
-		'@typescript-eslint/no-unused-vars': 'error',
+		// '@typescript-eslint/no-unused-vars': 'error',
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/ban-types": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "error",
@@ -52,12 +53,12 @@ module.exports = {
 		"@typescript-eslint/no-use-before-define": [
 			"error"
 		],
-		"@typescript-eslint/no-unused-vars": [
-			"error",
-			{
-				"ignoreRestSiblings": true
-			}
-		],
+		// "@typescript-eslint/no-unused-vars": [
+		// 	"error",
+		// 	{
+		// 		"ignoreRestSiblings": true
+		// 	}
+		// ],
 		"@typescript-eslint/no-misused-promises": [
 			"error",
 			{
@@ -68,6 +69,8 @@ module.exports = {
 				}
 			}
 		],
+
+		'capitalized-comments': 'off',
 
 
 
