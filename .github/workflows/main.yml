@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: doodle-sync-fe
-          path: dist
+          path: build
   download-and-deploy:
     needs: [uploads-artifacts]
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: doodle-sync-fe
-          path: dist
+          path: build
       - name: Listing deployable uploads-artifacts
         run: ls
       - name: deploy artifact
