@@ -13,8 +13,6 @@ export const theme: Theme = createTheme({
 			main: '#00B797',
 		},
 		grey: {
-			// Disable eslint @typescript-eslint/naming-convention
-			// eslint-disable-next-line @typescript-eslint/naming-convention
 			100: '#ACACAC',
 		},
 		text: {
@@ -32,7 +30,7 @@ export const theme: Theme = createTheme({
 		fontFamily: 'roboto, sans-serif',
 	},
 	components: {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
+
 		MuiTypography: {
 			styleOverrides: {
 				root: {
@@ -62,7 +60,7 @@ export const theme: Theme = createTheme({
 				},
 			},
 		},
-		// eslint-disable-next-line @typescript-eslint/naming-convention
+
 		MuiCard: {
 			styleOverrides: {
 				root: {

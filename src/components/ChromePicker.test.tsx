@@ -11,7 +11,5 @@ describe('ChromePicker works as expected', () => {
 	test('chrome picker initially renders with correct color', () => {
 		const color = screen.getByTestId('pen-color-display');
 		expect(color).toHaveStyle('background-color: red');
-		// TODO: add user event test for color change
-		// TODO: add test for color change callback
 	});
 });

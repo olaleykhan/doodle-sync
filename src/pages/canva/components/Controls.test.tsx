@@ -27,6 +27,5 @@ describe('Canvas Control component', () => {
 	test('various control modes', () => {
 		const lineWidthInput = screen.getByTestId('lineWidthInput');
 		expect(lineWidthInput).toBeInTheDocument();
-		// TODO: add integration test after business required has been nailed. different kinds of canvas modes
 	});
 });
