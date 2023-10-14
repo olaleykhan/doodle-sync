@@ -1,12 +1,12 @@
 import React, {useRef, useEffect, useState} from 'react';
-import {Canvas} from 'fabric/fabric-impl';
+import {fabric} from 'fabric';
 import {Card, Grid} from '@mui/material';
 import {type ColorChangeHandler} from 'react-color';
 import Controls from './components/Controls';
 
 const FabricCanvas:React.FC = () => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const [fabricCanvas, setFabricCanvas] = useState<Canvas | undefined>(undefined);
+	const [fabricCanvas, setFabricCanvas] = useState<fabric.Canvas | undefined>(undefined);
 	const [drawingColor, setDrawingColor] = useState('black');
 	const [lineWidth, setLineWidth] = useState(5);
 	const [isDrawingMode, setIsDrawingMode] = useState(true);
@@ -37,7 +37,7 @@ const FabricCanvas:React.FC = () => {
 		window.addEventListener('resize', updateCanvasSize);
 
 		// Initialize Fabric.js canvas
-		const newFabricCanvas = new Canvas(canvasRef.current, {
+		const newFabricCanvas = new fabric.Canvas(canvasRef.current, {
 			isDrawingMode: true,
 		});
 		setFabricCanvas(newFabricCanvas);
