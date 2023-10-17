@@ -1,15 +1,17 @@
 import { Tldraw, track, useEditor } from '@tldraw/tldraw'
 import '@tldraw/tldraw/tldraw.css'
-import { useYjsStore } from './useYjsStore'
+import { useYjsStore } from './hooks/useYjsStore'
+import { useRoomId } from './hooks/useRoomId'
 
 const HOST_URL =
 	import.meta.env.MODE === 'development'
-		? 'ws://localhost:1234'
+		? 'ws://localhost:8000/yjs'
 		: 'wss://demos.yjs.dev'
 
 export default function App() {
+	const roomId = useRoomId();
 	const store = useYjsStore({
-		roomId: 'example17',
+		roomId: roomId??"default",
 		hostUrl: HOST_URL,
 	})
 
