@@ -17,12 +17,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { YKeyValue } from 'y-utility/y-keyvalue'
 import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
-import { DEFAULT_STORE } from '../default_store'
+import { DEFAULT_STORE } from './../default_store'
 
 export function useYjsStore({
-	roomId,
+	roomId = 'example',
 	hostUrl = import.meta.env.MODE === 'development'
-		? "ws://localhost:1234"
+		? 'ws://localhost:1234'
 		: 'wss://demos.yjs.dev',
 	shapeUtils = [],
 }: Partial<{
