@@ -8,8 +8,12 @@ import {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/:roomId",
       element: <Home />,
+    },
+    {
+      path: "/test",
+      element:<h1> Test Page</h1>,
     },
   ]);
 

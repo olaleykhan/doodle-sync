@@ -1,6 +1,8 @@
-import { Tldraw, track, useEditor } from '@tldraw/tldraw'
+import { Tldraw } from '@tldraw/tldraw'
 import '@tldraw/tldraw/tldraw.css'
-import { useYjsStore } from './../hooks/useYjsStore'
+import { useYjsStore, useRoomId } from './../hooks'
+
+import UserCorner from './components/UserCorner'
 
 const HOST_URL =
 	import.meta.env.MODE === 'development'
@@ -8,42 +10,17 @@ const HOST_URL =
 		: 'wss://demos.yjs.dev'
 
 export default function Home() {
+    const {status, value: roomId} = useRoomId();
 	const store = useYjsStore({
-		roomId: 'example17',
+		roomId: roomId,
 		hostUrl: HOST_URL,
 	})
 
 	return (
 		<div className="tldraw__editor">
-			<Tldraw autoFocus store={store} shareZone={<NameEditor />} />
+			{status !== 'loaded' ? "loading lati aro": <Tldraw autoFocus store={store} shareZone={<UserCorner />} />}
 		</div>
 	)
 }
 
-const NameEditor = track(() => {
-	const editor = useEditor()
 
-	const { color, name } = editor.user
-
-	return (
-		<div style={{ pointerEvents: 'all', display: 'flex' }}>
-			<input
-				type="color"
-				value={color}
-				onChange={(e) => {
-					editor.user.updateUserPreferences({
-						color: e.currentTarget.value,
-					})
-				}}
-			/>
-			<input
-				value={name}
-				onChange={(e) => {
-					editor.user.updateUserPreferences({
-						name: e.currentTarget.value,
-					})
-				}}
-			/>
-		</div>
-	)
-})

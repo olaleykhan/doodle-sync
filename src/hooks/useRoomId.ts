@@ -1,14 +1,36 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-export const useRoomId = () => {
-  const [roomId, setRoomId] = useState<string|null>(null);
+interface RouteParamResult {
+  status: 'idle' | 'loading' | 'loaded' | 'error';
+  value: string | undefined;
+}
+
+const useRouteParam = (): RouteParamResult => {
+  const { roomId } = useParams<{ roomId: string | undefined }>();
+  const [status, setStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
+  const [value, setValue] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    // Assuming the room ID is the last part of the URL
-    const urlParts = window.location.pathname.split('/');
-    const id = urlParts[urlParts.length - 1];
-    setRoomId(id);
-  }, []);
+    const fetchParamValue = async () => {
+      try {
+        setStatus('loading');
+        // If there were any async operation, it would go here, e.g.,
+        // await someAsyncOperation(id);
+        setValue(roomId);
+        setStatus('loaded');
+      } catch (error) {
+        console.error(error);
+        setStatus('error');
+      }
+    };
 
-  return roomId;
+    if (roomId) {
+      fetchParamValue();
+    }
+  }, [roomId]);
+
+  return { status, value };
 };
+
+export default useRouteParam;
