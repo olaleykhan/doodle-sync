@@ -6,7 +6,7 @@ import UserCorner from './components/UserCorner'
 
 const HOST_URL =
 	import.meta.env.MODE === 'development'
-		? 'ws://localhost:1234'
+		? 'ws://localhost:8000/yjs'
 		: 'wss://demos.yjs.dev'
 
 export default function Home() {
