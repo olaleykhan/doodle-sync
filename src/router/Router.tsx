@@ -6,7 +6,7 @@ import {
     createRoutesFromElements,
     
   } from "react-router-dom";
-import { Canvas, Login, Home, Signup } from '../pages';
+import { Canvas, Home, Auth } from '../pages';
 import AuthGuard from './AuthGuard';
 
 
@@ -20,7 +20,7 @@ import AuthGuard from './AuthGuard';
 
       <Route path="/draw/:id" element={<Canvas />} />
     </Route>
-    <Route path="/auth" element={<Login />}>
+    <Route path="/auth" element={ <Auth/> }>
     </Route>
     </>
   ));
