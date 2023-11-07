@@ -2,20 +2,28 @@ import React from 'react'
 import {
     createBrowserRouter,
     RouterProvider,
+    Route,
+    createRoutesFromElements,
+    
   } from "react-router-dom";
-  import Home from '../pages/Home';
+import { Canvas, Login, Home, Signup } from '../pages';
+import AuthGuard from './AuthGuard';
 
 
-  const router = createBrowserRouter([
-    {
-      path: "/:roomId",
-      element: <Home />,
-    },
-    {
-      path: "/test",
-      element:<h1> Test Page</h1>,
-    },
-  ]);
+  const router = createBrowserRouter(createRoutesFromElements(
+<>
+<Route
+      element={<AuthGuard />}
+    >
+      <Route path="/" element={<Home />} />
+  
+
+      <Route path="/draw/:id" element={<Canvas />} />
+    </Route>
+    <Route path="/auth" element={<Login />}>
+    </Route>
+    </>
+  ));
 
 
 const Router = () => {
@@ -25,3 +33,19 @@ const Router = () => {
 }
 
 export default Router
+
+
+// [
+//   {
+//     path: "/",
+//     element: <Home/> ,
+//   },
+//   {
+//     path: "/draw/:roomId",
+//     element: <Canvas />,
+//   },
+//   {
+//     path : "/login",
+//     element : <Login />
+//   },
+// ]
