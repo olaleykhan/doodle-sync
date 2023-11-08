@@ -8,22 +8,36 @@ import {
   } from "react-router-dom";
 import { Canvas, Home, Auth } from '../pages';
 import AuthGuard from './AuthGuard';
+import Screen from '@/layout/Screen';
 
 
-  const router = createBrowserRouter(createRoutesFromElements(
-<>
-<Route
-      element={<AuthGuard />}
-    >
-      <Route path="/" element={<Home />} />
-  
+  const router = createBrowserRouter(
+    [
+      {
+        path: '/',
+        element: <Screen /> ,
+        children:[
+          {
+            path: '/',
+            element: <Home />,
+          },
+          {
+            path:"/draw/:id",
+            element: <Canvas />,
+          }
+        ]
+      },
+      {
+        path: '/auth',
+        element: <Auth/>
+      }
+    ],
+    // {
+    //   basename: '/doodle-sync',
 
-      <Route path="/draw/:id" element={<Canvas />} />
-    </Route>
-    <Route path="/auth" element={ <Auth/> }>
-    </Route>
-    </>
-  ));
+    // }
+  );
+
 
 
 const Router = () => {
@@ -33,19 +47,3 @@ const Router = () => {
 }
 
 export default Router
-
-
-// [
-//   {
-//     path: "/",
-//     element: <Home/> ,
-//   },
-//   {
-//     path: "/draw/:roomId",
-//     element: <Canvas />,
-//   },
-//   {
-//     path : "/login",
-//     element : <Login />
-//   },
-// ]
