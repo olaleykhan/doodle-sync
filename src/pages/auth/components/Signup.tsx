@@ -29,10 +29,11 @@ import { strengthColor, strengthIndicator } from '@/utils/password-strength';
 import { StringColorProps } from '@/bl/password';
 
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
+import { SignupData } from '@/bl/users';
 
 
 const AuthRegister = () => {
-  const { firebaseRegister } = useAuth();
+  const { firebaseRegister, firebaseUpdateProfile } = useAuth();
   const scriptedRef = useScriptRef();
 
   const [level, setLevel] = useState<StringColorProps>();
@@ -73,7 +74,14 @@ const AuthRegister = () => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             // await firebaseRegister(values.email, values.password).then(
-            const cred = await firebaseRegister(values.email, values.password);
+              const signupData:SignupData ={
+                fullName: `${values.firstname} ${values.lastname}`,
+                email: values.email,
+                password: values.password,
+                avatar: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              }
+            const cred = await firebaseRegister(signupData);
+            // await 
           } catch (err: any) {
             console.error(err);
             if (scriptedRef.current) {

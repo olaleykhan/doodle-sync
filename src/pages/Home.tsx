@@ -1,9 +1,9 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { Box, Typography } from '@mui/material';
-import React from 'react'
 
 const Home = () => {
   const {user} =  useAuth();
+  
   return (
     <Box>
       <h1> Home page</h1>
