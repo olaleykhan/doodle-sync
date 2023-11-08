@@ -1,6 +1,5 @@
 import { useEffect, useState, SyntheticEvent } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-
+import { Link as RouterLink } from 'react-router-dom';
 
 import {
   Box,
@@ -29,7 +28,7 @@ import { strengthColor, strengthIndicator } from '@/utils/password-strength';
 
 import { StringColorProps } from '@/bl/password';
 
-import { Visibility, VisibilityOff, VisibilityOffOutlined, VisibilityOffRounded } from '@mui/icons-material';
+import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
 
 
 const AuthRegister = () => {
@@ -62,7 +61,6 @@ const AuthRegister = () => {
           firstname: '',
           lastname: '',
           email: '',
-          company: '',
           password: '',
           submit: null
         }}
@@ -132,27 +130,7 @@ const AuthRegister = () => {
                   </FormHelperText>
                 )}
               </Grid>
-              <Grid item xs={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="company-signup">Company</InputLabel>
-                  <OutlinedInput
-                    fullWidth
-                    error={Boolean(touched.company && errors.company)}
-                    id="company-signup"
-                    value={values.company}
-                    name="company"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Demo Inc."
-                    inputProps={{}}
-                  />
-                </Stack>
-                {touched.company && errors.company && (
-                  <FormHelperText error id="helper-text-company-signup">
-                    {errors.company}
-                  </FormHelperText>
-                )}
-              </Grid>
+           
               <Grid item xs={12}>
                 <Stack spacing={1}>
                   <InputLabel htmlFor="email-signup">Email Address*</InputLabel>
@@ -199,7 +177,7 @@ const AuthRegister = () => {
                           // edge="end"
                           color="secondary"
                         >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                          {showPassword ? <VisibilityOffOutlined /> : <VisibilityOutlined />}
                         </Button>
                       </InputAdornment>
                     }
@@ -225,18 +203,7 @@ const AuthRegister = () => {
                   </Grid>
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body2">
-                  By Signing up, you agree to our &nbsp;
-                  <Link variant="subtitle2" component={RouterLink} to="#">
-                    Terms of Service
-                  </Link>
-                  &nbsp; and &nbsp;
-                  <Link variant="subtitle2" component={RouterLink} to="#">
-                    Privacy Policy
-                  </Link>
-                </Typography>
-              </Grid>
+          
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>

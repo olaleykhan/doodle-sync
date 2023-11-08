@@ -23,14 +23,18 @@ const initialState: AuthProps = {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
+              console.log(user, "user in onAuthStateChanged")
               dispatch({
                             type: LOGIN,
                             payload: {
                                 isLoggedIn: true,
                                 user:{
-                                    // TODO: populate user object preoperly
-                                    // https://firebase.google.com/docs/reference/js/auth.user
                                     id: user.uid,
+                                    email: user.email??"invalid email",
+                                    fullName: user.displayName??"",
+                                    avatar: user.photoURL??"",
+                                    image: user.photoURL??"",
+
                                 }
                             }
                         });
@@ -39,7 +43,7 @@ const initialState: AuthProps = {
               dispatch({type: LOGOUT});
             }
           });
-    },[]);
+    },[auth]);
 
     const firebaseRegister = async (email: string, password: string): Promise<UserCredential> => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);

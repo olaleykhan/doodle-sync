@@ -1,8 +1,17 @@
+import { useAuth } from '@/contexts/AuthContext'
+import { Box, Typography } from '@mui/material';
 import React from 'react'
 
 const Home = () => {
+  const {user} =  useAuth();
   return (
-    <h1> Home Page</h1>
+    <Box>
+      <h1> Home page</h1>
+      <Typography>{user?.email}</Typography>
+      <Typography>{user?.fullName} "Name should be here"</Typography>
+      <Typography>{user?.id}</Typography>
+      <img src={user?.avatar} alt="avatar" />
+    </Box>
   )
 }
 

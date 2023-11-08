@@ -50,7 +50,9 @@ const FirebaseSocial = () => {
         variant="outlined"
         color="secondary"
         fullWidth={!matchDownSM}
-        startIcon={<GoogleIcon/>}
+        startIcon={<GoogleIcon sx={{
+          color: 'red'
+        }} />}
         onClick={googleHandler}
       >
         {!matchDownSM && 'Google'}

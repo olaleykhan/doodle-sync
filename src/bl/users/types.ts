@@ -10,10 +10,7 @@ export type UserProfile  = {
     email?: string;
     avatar?: string;
     image?: string;
-    firstName?: string;
-    lastName?: string;
-    age?: 0,
-    level?: 0
+    fullName?: string;
   };
 
   export type FirebaseContextType = {

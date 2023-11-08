@@ -7,8 +7,7 @@ export const LOGIN_DATA:LoginData = {
 
 export const USER_DATA:UserProfile  ={
     email: '',
-    firstName: '',
-    lastName: '',
-    age: 0,
-    level: 0
+    fullName: '',
+    avatar: '',
+    image: '',
 }
