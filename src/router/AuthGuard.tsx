@@ -1,13 +1,31 @@
-import { useOutlet , useLoaderData} from 'react-router-dom';
-import {AuthProvider, useAuth} from '../hooks';
+import { useEffect, ReactElement } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AuthGuard = () => {
+import {useAuth} from '@/contexts/AuthContext';
 
-    const outlet = useOutlet();
 
-  return (
-    <AuthProvider>{outlet}</AuthProvider>
-  );
+type Props = {
+  children: ReactElement | null;
+};
+
+const AuthGuard:React.FC<Props> = ({ children }) => {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("guard in auth guard being called")
+    if (!isLoggedIn) {
+      navigate('/auth', {
+        state: {
+          from: location.pathname
+        },
+        replace: true
+      });
+    }
+  }, [isLoggedIn]);
+
+  return children;
 };
 
 export default AuthGuard;

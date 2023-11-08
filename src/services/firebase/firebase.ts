@@ -5,8 +5,6 @@ import { getAuth, connectAuthEmulator, GoogleAuthProvider, GithubAuthProvider, T
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDKkT44_Rk56NH_fpM1wya13WO0S4ewLXg",
   authDomain: "doodle-sync.firebaseapp.com",
