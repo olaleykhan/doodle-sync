@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, connectAuthEmulator, GoogleAuthProvider, GithubAuthProvider, TwitterAuthProvider } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,7 +19,18 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log("we are inited")
+console.log("we are inited as app: ", app)
 const analytics = getAnalytics(app);
-export const auth = getAuth(app);
-console.log(auth, "AUTHENTHICATION")
+export const firebaseAuthService = getAuth(app);
+console.log(firebaseAuthService, "AUTHENTHICATION  fire compare")
+export const googleAuthProvider = new GoogleAuthProvider();
+googleAuthProvider.addScope('profile')
+googleAuthProvider.addScope('email')
+googleAuthProvider.addScope('openid ')
+
+export const githubAuthProvider = new GithubAuthProvider();
+githubAuthProvider.addScope('repo')
+
+export const twitterAuthProvider = new TwitterAuthProvider();
+
+// connectAuthEmulator(firebaseAuthService, 'http://localhost:9099', { disableWarnings: true })
