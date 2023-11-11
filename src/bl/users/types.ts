@@ -5,15 +5,18 @@ export type LoginData = {
     email: string;
     password: string;
 };
+export type SignupData = {
+    fullName: string;
+    email: string;
+    password: string;
+    avatar: string;
+}
 export type UserProfile  = {
     id?: string;
     email?: string;
     avatar?: string;
     image?: string;
-    firstName?: string;
-    lastName?: string;
-    age?: 0,
-    level?: 0
+    fullName?: string;
   };
 
   export type FirebaseContextType = {
@@ -22,13 +25,13 @@ export type UserProfile  = {
     user?: UserProfile | null | undefined;
     logout: () => Promise<void>;
     // login: () => void;
-    firebaseRegister: (email: string, password: string) => Promise<UserCredential>;
+    firebaseRegister: (data: SignupData) => Promise<UserCredential>;
     // firebaseEmailPasswordSignIn: (email: string, password: string) => Promise<UserCredential>;
     firebaseGoogleSignIn: () => Promise<UserCredential>;
     firebaseGithubSignIn: () => Promise<UserCredential>;
     firebaseTwitterSignIn: () => Promise<UserCredential>;
     // resetPassword: (email: string) => Promise<void>;
-    // updateProfile: VoidFunction;
+    firebaseUpdateProfile: (data: UserProfile)=>Promise<void>;
   };
 
   export interface AuthProps {

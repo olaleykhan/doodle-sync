@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut    } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile     } from "firebase/auth";
 
 import {LOGIN, LOGOUT} from './auth-reducer/actions';
 import authReducer from './auth-reducer/auth';
 
 import Loader from '@/components/Loader';
-import { FirebaseContextType, AuthProps } from '@/bl/users';
+import { FirebaseContextType, AuthProps, SignupData, UserProfile } from '@/bl/users';
 import { googleAuthProvider, githubAuthProvider, twitterAuthProvider } from '@/services/firebase/firebase';
 
 const initialState: AuthProps = {
@@ -28,9 +28,12 @@ const initialState: AuthProps = {
                             payload: {
                                 isLoggedIn: true,
                                 user:{
-                                    // TODO: populate user object preoperly
-                                    // https://firebase.google.com/docs/reference/js/auth.user
                                     id: user.uid,
+                                    email: user.email??state.user?.email,
+                                    fullName: user.displayName?? state.user?.fullName,
+                                    avatar: user.photoURL??state.user?.avatar,
+                                    image: user.photoURL??state.user?.avatar,
+
                                 }
                             }
                         });
@@ -39,11 +42,26 @@ const initialState: AuthProps = {
               dispatch({type: LOGOUT});
             }
           });
-    },[]);
+    },[auth.currentUser]);
 
-    const firebaseRegister = async (email: string, password: string): Promise<UserCredential> => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        return userCredential;
+    const firebaseRegister = async (data:SignupData): Promise<UserCredential> => {
+    
+        
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password); 
+        dispatch({
+          type: LOGIN,
+          payload: {
+              isLoggedIn: true,
+              user:{
+                  email: data.email,
+                  fullName: data.fullName,
+                  avatar: data.avatar
+              }
+          }
+      })       
+      await firebaseUpdateProfile(data as UserProfile);
+
+      return userCredential;
     }
 
     const firebaseGoogleSignIn =  async () => {
@@ -59,6 +77,19 @@ const initialState: AuthProps = {
     const firebaseTwitterSignIn = async () => {
         const cred = await signInWithPopup(auth, twitterAuthProvider);
         return cred
+    }
+    const firebaseUpdateProfile = async (data:UserProfile) => {
+      
+        try {
+            const user = auth.currentUser;
+
+            console.log(user, "user from google", state.user, "state user")
+            if (user) {
+              await updateProfile(user,{photoURL: data.avatar, displayName: data.fullName} );
+            }
+          } catch (error) {
+            console.log(error)   
+          }
     }
     const logout = async () => {
         try {
@@ -80,6 +111,7 @@ const initialState: AuthProps = {
             firebaseGoogleSignIn,
             firebaseGithubSignIn,
             firebaseTwitterSignIn,
+            firebaseUpdateProfile,
             logout,
           }}
         >
