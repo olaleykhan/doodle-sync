@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {useAuth} from '@/contexts/AuthContext';
 import Signup from './components/Signup'
 import AuthLayout from '@/pages/auth/components/AuthLayout';
+import Login from './components/Login';
 
 
 
@@ -24,7 +25,7 @@ const Auth = () => {
   }, [isLoggedIn]);
   return (
    <AuthLayout page={page} setPage={setpage} >
-    {page === "login" ? "LOGIN" : <Signup />}
+    {page === "login" ? <Login/> : <Signup />}
    </AuthLayout>
   )
 }

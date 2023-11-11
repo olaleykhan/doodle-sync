@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile     } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile, signInWithEmailAndPassword     } from "firebase/auth";
 
 import {LOGIN, LOGOUT} from './auth-reducer/actions';
 import authReducer from './auth-reducer/auth';
@@ -98,6 +98,11 @@ const initialState: AuthProps = {
             console.log(error)   
         }        
     }
+
+    const firebaseEmailPasswordSignIn = async (email: string, password: string) => {
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        return cred
+    }
     if (state.isInitialized !== undefined && !state.isInitialized) {
         return <Loader />;
       }
@@ -107,6 +112,7 @@ const initialState: AuthProps = {
         <AuthContext.Provider
           value={{
             ...state,
+            firebaseEmailPasswordSignIn,
             firebaseRegister,
             firebaseGoogleSignIn,
             firebaseGithubSignIn,
