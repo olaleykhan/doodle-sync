@@ -4,9 +4,10 @@ import {
     RouterProvider,
     Route,
     createRoutesFromElements,
+    Outlet,
     
   } from "react-router-dom";
-import { Canvas, Home, Auth } from '../pages';
+import { Canvas, Home, Auth, ForgotPassword } from '../pages';
 import AuthGuard from './AuthGuard';
 import Screen from '@/layout/Screen';
 
@@ -29,7 +30,20 @@ import Screen from '@/layout/Screen';
       },
       {
         path: '/auth',
-        element: <Auth/>
+        element: <Outlet />,
+        children:[
+          {
+            path: '/auth',
+            element: <Auth />,
+          },
+          {
+            path:"/auth/forgot-password",
+            element: <ForgotPassword />,
+          }
+        ]
+      },
+      {
+
       }
     ],
     // {
