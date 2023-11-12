@@ -6,14 +6,14 @@ import { getAuth, connectAuthEmulator, GoogleAuthProvider, GithubAuthProvider, T
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "doodle-sync.firebaseapp.com",
   projectId: "doodle-sync",
   storageBucket: "doodle-sync.appspot.com",
   messagingSenderId: "965639281039",
   appId: "1:965639281039:web:0f00a1a5b5758d970853fa",
   measurementId: "G-9M88E0RN5B",
-  databaseURL: import.meta.env.FIREBASE_DB_URL,
+  databaseURL: import.meta.env.VITE_FIREBASE_DB_URL,
 };
 
 // Initialize Firebase
@@ -26,7 +26,7 @@ googleAuthProvider.addScope('email')
 googleAuthProvider.addScope('openid ')
 
 export const githubAuthProvider = new GithubAuthProvider();
-githubAuthProvider.addScope('repo')
+githubAuthProvider.addScope('user')
 
 export const twitterAuthProvider = new TwitterAuthProvider();
 

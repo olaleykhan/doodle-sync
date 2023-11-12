@@ -11,7 +11,8 @@ import { googleAuthProvider, githubAuthProvider, twitterAuthProvider } from '@/s
 const initialState: AuthProps = {
     isLoggedIn: false,
     isInitialized: false,
-    user: null
+    // user: null,
+    userCredential: null,
   };
 
   const AuthContext = createContext<FirebaseContextType | null>(null);
@@ -27,14 +28,8 @@ const initialState: AuthProps = {
                             type: LOGIN,
                             payload: {
                                 isLoggedIn: true,
-                                user:{
-                                    id: user.uid,
-                                    email: user.email??state.user?.email,
-                                    fullName: user.displayName?? state.user?.fullName,
-                                    avatar: user.photoURL??state.user?.avatar,
-                                    image: user.photoURL??state.user?.avatar,
-
-                                }
+                                userCredential: user,
+                                // user: user
                             }
                         });
             } else {
@@ -58,7 +53,9 @@ const initialState: AuthProps = {
                   avatar: data.avatar
               }
           }
-      })       
+      })    
+      
+      console.log(userCredential, "data from register")
       await firebaseUpdateProfile(data as UserProfile);
 
       return userCredential;
@@ -66,14 +63,24 @@ const initialState: AuthProps = {
 
     const firebaseGoogleSignIn =  async () => {
         const cred = await signInWithPopup(auth, googleAuthProvider );
+        console.log(cred, "data from google signin");
         return cred
 
     }
 
     const firebaseGithubSignIn = async () => {
-        const cred = await signInWithPopup(auth, githubAuthProvider);
-        return cred
-    }
+      try {
+        const cred: UserCredential = await signInWithPopup(auth, githubAuthProvider);
+        console.log(cred.user, "data from GitHub signin");
+    
+    
+        return cred;
+      } catch (error) {
+        console.error('GitHub sign-in error:', error);
+        throw error;
+      }
+    };
+    
     const firebaseTwitterSignIn = async () => {
         const cred = await signInWithPopup(auth, twitterAuthProvider);
         return cred
@@ -83,7 +90,7 @@ const initialState: AuthProps = {
         try {
             const user = auth.currentUser;
 
-            console.log(user, "user from google", state.user, "state user")
+            // console.log(user, "user from google", state.user, "state user")
             if (user) {
               await updateProfile(user,{photoURL: data.avatar, displayName: data.fullName} );
             }
