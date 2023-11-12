@@ -14,7 +14,6 @@ const AuthGuard:React.FC<Props> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("guard in auth guard being called")
     if (!isLoggedIn) {
       navigate('/auth', {
         state: {

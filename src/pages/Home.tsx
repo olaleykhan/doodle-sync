@@ -1,19 +1,14 @@
 import {useState} from 'react'
-import { UserAuthData, UserProfile } from '@/bl/users';
+import { UserProfile } from '@/bl/users';
 import { useAuth } from '@/contexts/AuthContext'
-import { createUser } from '@/services/firebase/userServices';
 import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 
 
 const Home = () => {
-  const { userCredential} =  useAuth();
+  const { user} =  useAuth();
   const [userData, setUserData] = useState<UserProfile|null>(null);
   const  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(userData, "USER DATA !!!")
-    // const res = await createUser(userData!);
-
-    // console.log(res, "res fr4om create user")
   }
   
   return (
@@ -26,11 +21,11 @@ const Home = () => {
 <Button type="submit"> Add User</Button>
 </Box>
 <br/>
-      <Typography>{userCredential?.email}</Typography>
-      <Typography>{userCredential?.displayName} "Name should be here"</Typography>
-      {/* <Typography>{userData?.username}</Typography> */}
-      {/* <Typography>{userCredential?.id}</Typography> */}
-      <img src={userCredential?.photoURL??""} alt="avatar" height="50px" />
+      <Typography>email: {user?.email}</Typography>
+      <Typography> full name: {user?.displayName} "Name should be here"</Typography>
+      <Typography> username: {user?.username}</Typography>
+      <Typography> id: {user?.id}</Typography>
+      <img src={user?.photoURL??""} alt="avatar" height="50px" />
 
  
 

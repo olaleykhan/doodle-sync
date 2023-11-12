@@ -6,19 +6,18 @@ export type LoginData = {
     password: string;
 };
 export type SignupData = {
-    fullName: string;
+  displayName: string;
     email: string;
     password: string;
-    avatar: string;
+    username: string;
 }
 export type UserAuthData =UserCredential['user'];
 
 export type UserProfile  = {
     id?: string;
     email?: string;
-    avatar?: string;
-    image?: string;
-    fullName?: string;
+    photoURL?: string|null;
+    displayName?: string;
     username?: string;
     sessions?: string[];
     token?: string;
@@ -27,7 +26,7 @@ export type UserProfile  = {
   export type FirebaseContextType = {
     isLoggedIn: boolean;
     isInitialized?: boolean;
-    // user?: null | undefined|UserAuthData;
+    user?: null | undefined|UserProfile;
     userCredential?: UserAuthData | null;
     logout: () => Promise<void>;
     // login: () => void;
@@ -44,7 +43,7 @@ export type UserProfile  = {
     isLoggedIn: boolean;
     isInitialized?: boolean;
     userCredential: UserAuthData|null;
-    // user: UserProfile | null;
+    user: UserProfile | null;
     token?: string | null;
   }
 

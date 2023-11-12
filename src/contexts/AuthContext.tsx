@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile, signInWithEmailAndPassword     } from "firebase/auth";
+import { createUser, getUserById } from '@/services/firebase/userServices';
 
 import {LOGIN, LOGOUT} from './auth-reducer/actions';
 import authReducer from './auth-reducer/auth';
@@ -11,7 +12,7 @@ import { googleAuthProvider, githubAuthProvider, twitterAuthProvider } from '@/s
 const initialState: AuthProps = {
     isLoggedIn: false,
     isInitialized: false,
-    // user: null,
+    user: null,
     userCredential: null,
   };
 
@@ -22,14 +23,18 @@ const initialState: AuthProps = {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+        onAuthStateChanged(auth, async (userCred) => {
+          console.log("ON AUTH STATE CHANGED")
+            if (userCred) {
+              console.log("userCred", userCred.uid)
+              const user = await getUserById(userCred.uid);
+
               dispatch({
                             type: LOGIN,
                             payload: {
                                 isLoggedIn: true,
-                                userCredential: user,
-                                // user: user
+                                userCredential: userCred,
+                                user:user
                             }
                         });
             } else {
@@ -43,6 +48,7 @@ const initialState: AuthProps = {
     
         
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password); 
+      console.log(userCredential, "data from register")
         dispatch({
           type: LOGIN,
           payload: {
@@ -54,9 +60,18 @@ const initialState: AuthProps = {
               }
           }
       })    
-      
+      const UserProfile:UserProfile = {        
+        id: userCredential.user.uid,
+          email: data.email,
+          displayName: data.displayName,
+          photoURL:userCredential.user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          username: data.username,
+          sessions:[]
+
+      }
       console.log(userCredential, "data from register")
       await firebaseUpdateProfile(data as UserProfile);
+      await createUser(UserProfile);
 
       return userCredential;
     }

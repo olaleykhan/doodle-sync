@@ -8,7 +8,7 @@ import { AuthProps, AuthActionProps } from '@/bl/users';
 export const initialState: AuthProps = {
   isLoggedIn: false,
   isInitialized: false,
-  // user: null,
+  user: null,
   userCredential: null
 };
 
@@ -16,21 +16,23 @@ export const initialState: AuthProps = {
 const auth = (state = initialState, action: AuthActionProps) => {
   switch (action.type) {
     case REGISTER: {
-      const {  userCredential } = action.payload!;
+      const {  userCredential, user } = action.payload!;
       return {
         ...state,
         isLoggedIn: true,
         isInitialized: true,
-        userCredential
+        userCredential,
+        user
       };
     }
     case LOGIN: {
-      const { userCredential } = action.payload!;
+      const { userCredential, user } = action.payload!;
       return {
         ...state,
         isLoggedIn: true,
         isInitialized: true,
-        userCredential
+        userCredential,
+        user,
       };
     }
     case LOGOUT: {

@@ -7,11 +7,8 @@ import { UserProfile } from "@/bl/users";
 const usersRef = collection(firestoreDB, "users");
 
 export async function createUser(user: UserProfile ) {
-    // delete id from user
     const docRef = await setDoc(doc(usersRef, user.id!),user);
     console.log("Document written with ID: ", docRef);
-    
-    console.log("all users =>  ", await getAllUsers())
 }
 
 export async function getAllUsers() {
@@ -26,13 +23,12 @@ export async function getAllUsers() {
     return data;
 }
 
-export async function getUserById(id: string) {
+export async function getUserById(id: string): Promise<UserProfile|null> {
     const docRef = doc(usersRef, id)
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        return docSnap.data()
     } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+        return null;
     }
 }
