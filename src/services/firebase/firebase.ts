@@ -12,15 +12,14 @@ const firebaseConfig = {
   storageBucket: "doodle-sync.appspot.com",
   messagingSenderId: "965639281039",
   appId: "1:965639281039:web:0f00a1a5b5758d970853fa",
-  measurementId: "G-9M88E0RN5B"
+  measurementId: "G-9M88E0RN5B",
+  databaseURL: "invalid_db_url",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-console.log("we are inited as app: ", app)
-const analytics = getAnalytics(app);
-export const firebaseAuthService = getAuth(app);
-console.log(firebaseAuthService, "AUTHENTHICATION  fire compare")
+export const fireBaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(fireBaseApp);
+export const firebaseAuthService = getAuth(fireBaseApp);
 export const googleAuthProvider = new GoogleAuthProvider();
 googleAuthProvider.addScope('profile')
 googleAuthProvider.addScope('email')

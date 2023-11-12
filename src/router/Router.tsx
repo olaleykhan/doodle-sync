@@ -1,14 +1,10 @@
-import React from 'react'
 import {
     createBrowserRouter,
     RouterProvider,
-    Route,
-    createRoutesFromElements,
     Outlet,
     
   } from "react-router-dom";
 import { Canvas, Home, Auth, ForgotPassword } from '../pages';
-import AuthGuard from './AuthGuard';
 import Screen from '@/layout/Screen';
 
 
@@ -23,7 +19,7 @@ import Screen from '@/layout/Screen';
             element: <Home />,
           },
           {
-            path:"/draw/:id",
+            path:"/draw/:roomId",
             element: <Canvas />,
           }
         ]
