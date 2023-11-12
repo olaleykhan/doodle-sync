@@ -27,14 +27,14 @@ const initialState: AuthProps = {
           console.log("ON AUTH STATE CHANGED")
             if (userCred) {
               console.log("userCred", userCred.uid)
-              const user = await getUserById(userCred.uid);
+              const userDetails = await getUserById(userCred.uid);
 
               dispatch({
                             type: LOGIN,
                             payload: {
                                 isLoggedIn: true,
                                 userCredential: userCred,
-                                user:user
+                                user:userDetails
                             }
                         });
             } else {
@@ -44,61 +44,53 @@ const initialState: AuthProps = {
           });
     },[auth.currentUser]);
 
-    const firebaseRegister = async (data:SignupData): Promise<UserCredential> => {
+    const firebaseRegister = async (data:SignupData): Promise<void> => {
     
         
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password); 
-      console.log(userCredential, "data from register")
-        dispatch({
-          type: LOGIN,
-          payload: {
-              isLoggedIn: true,
-              user:{
-                  email: data.email,
-                  fullName: data.fullName,
-                  avatar: data.avatar
-              }
-          }
-      })    
+      const cred = await createUserWithEmailAndPassword(auth, data.email, data.password);    
       const UserProfile:UserProfile = {        
-        id: userCredential.user.uid,
+        id: cred.user.uid,
           email: data.email,
           displayName: data.displayName,
-          photoURL:userCredential.user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          photoURL:cred.user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
           username: data.username,
           sessions:[]
-
       }
-      console.log(userCredential, "data from register")
       await firebaseUpdateProfile(data as UserProfile);
       await createUser(UserProfile);
-
-      return userCredential;
     }
 
     const firebaseGoogleSignIn =  async () => {
-        const cred = await signInWithPopup(auth, googleAuthProvider );
-        console.log(cred, "data from google signin");
-        return cred
+        const {user} = await signInWithPopup(auth, googleAuthProvider );
+        const userProfile:UserProfile = {
+          id: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          // use email as username. user is allow to change it
+          username: user.email,
+          sessions:[]
+        }
+        await createUser(userProfile);
 
     }
 
     const firebaseGithubSignIn = async () => {
-      try {
-        const cred: UserCredential = await signInWithPopup(auth, githubAuthProvider);
-        console.log(cred.user, "data from GitHub signin");
-    
-    
-        return cred;
-      } catch (error) {
-        console.error('GitHub sign-in error:', error);
-        throw error;
+      const {user} = await signInWithPopup(auth, githubAuthProvider );
+      const userProfile:UserProfile = {
+        id: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        username: user.email,
+        sessions:[]
       }
+      await createUser(userProfile);
     };
     
+    // TODO: fix twitter. it does not work yet
     const firebaseTwitterSignIn = async () => {
-        const cred = await signInWithPopup(auth, twitterAuthProvider);
-        return cred
+         await signInWithPopup(auth, twitterAuthProvider);
     }
     const firebaseUpdateProfile = async (data:UserProfile) => {
       
@@ -107,7 +99,7 @@ const initialState: AuthProps = {
 
             // console.log(user, "user from google", state.user, "state user")
             if (user) {
-              await updateProfile(user,{photoURL: data.avatar, displayName: data.fullName} );
+              await updateProfile(user,{photoURL: data.photoURL, displayName: data.displayName} );
             }
           } catch (error) {
             console.log(error)   
@@ -122,8 +114,7 @@ const initialState: AuthProps = {
     }
 
     const firebaseEmailPasswordSignIn = async (email: string, password: string) => {
-        const cred = await signInWithEmailAndPassword(auth, email, password);
-        return cred
+         await signInWithEmailAndPassword(auth, email, password);
     }
     if (state.isInitialized !== undefined && !state.isInitialized) {
         return <Loader />;
