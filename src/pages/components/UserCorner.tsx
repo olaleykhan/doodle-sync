@@ -1,9 +1,11 @@
+import { useAuth } from '@/contexts/AuthContext'
 import { track, useEditor } from '@tldraw/tldraw'
 
 const UserCorner = track(() => {
     const editor = useEditor()
 
-	const { color, name } = editor.user
+	const { color} = editor.user
+	const {user} = useAuth()
 
 	return (
 		<div style={{ pointerEvents: 'all', display: 'flex' }}>
@@ -17,7 +19,7 @@ const UserCorner = track(() => {
 				}}
 			/>
 			<input
-				value={name}
+				value={user?.fullName}
 				onChange={(e) => {
 					editor.user.updateUserPreferences({
 						name: e.currentTarget.value,

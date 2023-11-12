@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile     } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile, signInWithEmailAndPassword     } from "firebase/auth";
+import { createUser, getUserById } from '@/services/firebase/userServices';
 
 import {LOGIN, LOGOUT} from './auth-reducer/actions';
 import authReducer from './auth-reducer/auth';
@@ -11,7 +12,8 @@ import { googleAuthProvider, githubAuthProvider, twitterAuthProvider } from '@/s
 const initialState: AuthProps = {
     isLoggedIn: false,
     isInitialized: false,
-    user: null
+    user: null,
+    userCredential: null,
   };
 
   const AuthContext = createContext<FirebaseContextType | null>(null);
@@ -21,20 +23,18 @@ const initialState: AuthProps = {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+        onAuthStateChanged(auth, async (userCred) => {
+          console.log("ON AUTH STATE CHANGED")
+            if (userCred) {
+              console.log("userCred", userCred.uid)
+              const user = await getUserById(userCred.uid);
+
               dispatch({
                             type: LOGIN,
                             payload: {
                                 isLoggedIn: true,
-                                user:{
-                                    id: user.uid,
-                                    email: user.email??state.user?.email,
-                                    fullName: user.displayName?? state.user?.fullName,
-                                    avatar: user.photoURL??state.user?.avatar,
-                                    image: user.photoURL??state.user?.avatar,
-
-                                }
+                                userCredential: userCred,
+                                user:user
                             }
                         });
             } else {
@@ -48,6 +48,7 @@ const initialState: AuthProps = {
     
         
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password); 
+      console.log(userCredential, "data from register")
         dispatch({
           type: LOGIN,
           payload: {
@@ -58,22 +59,43 @@ const initialState: AuthProps = {
                   avatar: data.avatar
               }
           }
-      })       
+      })    
+      const UserProfile:UserProfile = {        
+        id: userCredential.user.uid,
+          email: data.email,
+          displayName: data.displayName,
+          photoURL:userCredential.user.photoURL?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          username: data.username,
+          sessions:[]
+
+      }
+      console.log(userCredential, "data from register")
       await firebaseUpdateProfile(data as UserProfile);
+      await createUser(UserProfile);
 
       return userCredential;
     }
 
     const firebaseGoogleSignIn =  async () => {
         const cred = await signInWithPopup(auth, googleAuthProvider );
+        console.log(cred, "data from google signin");
         return cred
 
     }
 
     const firebaseGithubSignIn = async () => {
-        const cred = await signInWithPopup(auth, githubAuthProvider);
-        return cred
-    }
+      try {
+        const cred: UserCredential = await signInWithPopup(auth, githubAuthProvider);
+        console.log(cred.user, "data from GitHub signin");
+    
+    
+        return cred;
+      } catch (error) {
+        console.error('GitHub sign-in error:', error);
+        throw error;
+      }
+    };
+    
     const firebaseTwitterSignIn = async () => {
         const cred = await signInWithPopup(auth, twitterAuthProvider);
         return cred
@@ -83,7 +105,7 @@ const initialState: AuthProps = {
         try {
             const user = auth.currentUser;
 
-            console.log(user, "user from google", state.user, "state user")
+            // console.log(user, "user from google", state.user, "state user")
             if (user) {
               await updateProfile(user,{photoURL: data.avatar, displayName: data.fullName} );
             }
@@ -98,6 +120,11 @@ const initialState: AuthProps = {
             console.log(error)   
         }        
     }
+
+    const firebaseEmailPasswordSignIn = async (email: string, password: string) => {
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        return cred
+    }
     if (state.isInitialized !== undefined && !state.isInitialized) {
         return <Loader />;
       }
@@ -107,6 +134,7 @@ const initialState: AuthProps = {
         <AuthContext.Provider
           value={{
             ...state,
+            firebaseEmailPasswordSignIn,
             firebaseRegister,
             firebaseGoogleSignIn,
             firebaseGithubSignIn,

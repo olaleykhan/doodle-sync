@@ -5,9 +5,9 @@ export const LOGIN_DATA:LoginData = {
     password: '',
 }
 
-export const USER_DATA:UserProfile  ={
-    email: '',
-    fullName: '',
-    avatar: '',
-    image: '',
-}
+// export const USER_DATA:UserProfile  ={
+//     email: '',
+//     displayName: '',
+//     avatar: '',
+//     image: '',
+// }
