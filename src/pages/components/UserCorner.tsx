@@ -1,4 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext'
+import { Typography, Box } from '@mui/material'
 import { track, useEditor } from '@tldraw/tldraw'
 
 const UserCorner = track(() => {
@@ -8,7 +9,7 @@ const UserCorner = track(() => {
 	const {user} = useAuth()
 
 	return (
-		<div style={{ pointerEvents: 'all', display: 'flex' }}>
+		<Box sx={{ pointerEvents: 'all', display: 'flex', my:1 }}>
 			<input
 				type="color"
 				value={color}
@@ -18,15 +19,16 @@ const UserCorner = track(() => {
 					})
 				}}
 			/>
-			<input
-				value={user?.fullName}
-				onChange={(e) => {
-					editor.user.updateUserPreferences({
-						name: e.currentTarget.value,
-					})
-				}}
-			/>
-		</div>
+
+			<Typography variant="caption" sx={{
+				px:1,
+				ml:1,
+				// backgroundColor: color,
+				borderRadius: 1,
+				border: '2px solid',
+				borderColor: color,
+			}} >{user?.username}</Typography>
+		</Box>
 	)
 })
 

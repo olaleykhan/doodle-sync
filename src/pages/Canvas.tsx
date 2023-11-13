@@ -14,7 +14,7 @@ export default function Canvas() {
 
 	return (
 		<div className="tldraw__editor">
-			{status !== 'loaded' ? "loading lati aro": <Tldraw autoFocus store={store} shareZone={<UserCorner />} />}
+			{status !== 'loaded' ? "loading Canvas...": <Tldraw autoFocus store={store} shareZone={<UserCorner />} />}
 		</div>
 	)
 }

@@ -24,7 +24,6 @@ const initialState: AuthProps = {
 
     useEffect(() => {
         onAuthStateChanged(auth, async (userCred) => {
-          console.log("ON AUTH STATE CHANGED")
             if (userCred) {
               console.log("userCred", userCred.uid)
               const userDetails = await getUserById(userCred.uid);
