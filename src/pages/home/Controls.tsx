@@ -4,7 +4,12 @@ import HistoryIcon from '@mui/icons-material/History';
 import GroupsIcon from '@mui/icons-material/Groups';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-const Controls = () => {
+type Props = {  
+  onClickSave: () => void
+  onHistory: () => void
+  onStartRoom: () => void
+}
+const Controls:React.FC<Props> = ({onClickSave, onHistory, onStartRoom}) => {
   return (
     <Box mb={4}  sx={{
         width:'100%',
@@ -23,13 +28,13 @@ const Controls = () => {
             <Button color="primary" title="save online" > <CloudUploadIcon/></Button>
             </Grid> */}
             <Grid item xs="auto" > 
-            <Button color="primary" title="show history" size='large' > <HistoryIcon fontSize="large" /></Button>
+            <Button onClick={onHistory} color="primary" title="show history" size='large' > <HistoryIcon fontSize="large" /></Button>
             </Grid>
             <Grid item xs="auto" > 
-            <Button color="primary" title="save online" size='large' > <CloudUploadIcon fontSize="large" /></Button>
+            <Button onClick={onClickSave}  color="primary" title="save online" size='large' > <CloudUploadIcon fontSize="large" /></Button>
             </Grid>
             <Grid item xs="auto" > 
-            <Button color="primary" title="create room" size='large' > <GroupsIcon fontSize="large" /></Button>
+            <Button onClick={onStartRoom} color="primary" title="create room" size='large' > <GroupsIcon fontSize="large" /></Button>
             </Grid>
         </Grid>
        
