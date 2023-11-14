@@ -17,7 +17,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { YKeyValue } from 'y-utility/y-keyvalue'
 import { WebsocketProvider } from 'y-websocket'
 import * as Y from 'yjs'
-import { DEFAULT_STORE } from '@/bl/sessions/default_store'
+import { DEFAULT_STORE } from '@/bl/doodle/default_store'
 
 export function useYjsStore({
 	roomId = 'example',

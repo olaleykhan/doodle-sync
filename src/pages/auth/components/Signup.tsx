@@ -79,7 +79,6 @@ const AuthRegister = () => {
                 password: values.password,
                 username: values.username
               }
-              console.log("about to firebase register")
             const cred = await firebaseRegister(signupData);
             // await 
           } catch (err: any) {

@@ -17,14 +17,19 @@ import {
 	Tldraw
 } from '@tldraw/tldraw'
 import '@tldraw/tldraw/tldraw.css'
-import { DEFAULT_STORE } from '@/bl/sessions/default_store'
+import { DEFAULT_STORE } from '@/bl/doodle/default_store'
 
 import UserCorner from '../components/UserCorner'
 import Controls from './Controls'
+import { DoodleDocumentDraft } from '@/bl/doodle/types'
+import { createDoodle } from '@/services/firebase/doodleService'
+import { useAuth } from '@/contexts/AuthContext'
 
 // ... (import statements)
 
 const Home = track(() => {
+
+	const { user } = useAuth()
 	const [store] = useState(() => {
 		const store = createTLStore({
 			shapeUtils: defaultShapeUtils,
@@ -38,9 +43,16 @@ const Home = track(() => {
 // }, [store])
 
 
-const handleSaveStore = () => {
-	const snap = store.getSnapshot('all')
-	console.log("store for the TLDRAW is : ",snap )
+const handleSaveStore = async () => {
+	const snap = store.allRecords();
+	const doodle:Omit<DoodleDocumentDraft, "createdAt"> = {
+		documentName: "My first doodle bybAlaf",
+		userId: user?.id!,
+		sessionId: "lone",
+		doodle: snap
+	}
+	await createDoodle(doodle)
+
 }
 const handleShowHistory = () => {
 	console.log("saving to history")
