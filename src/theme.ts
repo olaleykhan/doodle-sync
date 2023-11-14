@@ -30,6 +30,9 @@ export const theme: Theme = createTheme({
 	},
 	typography: {
 		fontFamily: 'roboto, sans-serif',
+		button: {
+			textTransform: 'none',
+		}
 	},
 	components: {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -62,6 +65,17 @@ export const theme: Theme = createTheme({
 				},
 			},
 		},
+		MuiButton: {
+			styleOverrides: {
+				root: {
+					cursor: 'pointer !important',
+					'&:hover': {
+						boxShadow: 'none',
+						blurRadius: 0,
+				}
+			}
+		}
+	},
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		MuiCard: {
 			styleOverrides: {
