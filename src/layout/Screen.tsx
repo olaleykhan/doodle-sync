@@ -1,7 +1,6 @@
 import { useAuth } from '@/contexts/AuthContext'
 import AuthGuard from '@/router/AuthGuard'
 import { Button } from '@mui/material'
-import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 const Screen = () => {

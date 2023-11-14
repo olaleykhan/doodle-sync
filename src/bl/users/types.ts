@@ -15,10 +15,10 @@ export type UserAuthData =UserCredential['user'];
 
 export type UserProfile  = {
     id?: string;
-    email?: string;
+    email?: string|null;
     photoURL?: string|null;
-    displayName?: string;
-    username?: string;
+    displayName?: string|null;
+    username?: string|null;
     sessions?: string[];
     token?: string;
   };
@@ -30,11 +30,11 @@ export type UserProfile  = {
     userCredential?: UserAuthData | null;
     logout: () => Promise<void>;
     // login: () => void;
-    firebaseRegister: (data: SignupData) => Promise<UserCredential>;
-    firebaseEmailPasswordSignIn: (email: string, password: string) => Promise<UserCredential>;
-    firebaseGoogleSignIn: () => Promise<UserCredential>;
-    firebaseGithubSignIn: () => Promise<UserCredential>;
-    firebaseTwitterSignIn: () => Promise<UserCredential>;
+    firebaseRegister: (data: SignupData) => Promise<void>;
+    firebaseEmailPasswordSignIn: (email: string, password: string) => Promise<void>;
+    firebaseGoogleSignIn: () => Promise<void>;
+    firebaseGithubSignIn: () => Promise<void>;
+    firebaseTwitterSignIn: () => Promise<void>;
     // resetPassword: (email: string) => Promise<void>;
     firebaseUpdateProfile: (data: UserProfile)=>Promise<void>;
   };

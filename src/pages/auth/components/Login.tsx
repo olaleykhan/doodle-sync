@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
+
 // material-ui
 import {
   Button,
@@ -13,18 +14,17 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography
+  Typography,
+  Divider,
 } from '@mui/material';
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
-
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 
 import { useAuth } from '@/contexts/AuthContext';
 import useScriptRef from '@/hooks/useScriptRef';
-
+import FirebaseSocial from './FirebaseSocial';
 
 const Login = () => {
   const [checked, setChecked] = React.useState(false);
@@ -158,6 +158,14 @@ const Login = () => {
                   <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
                     Login
                   </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Divider>
+                  <Typography variant="caption">Login with</Typography>
+                </Divider>
+              </Grid>
+              <Grid item xs={12}>
+                <FirebaseSocial />
               </Grid>
             </Grid>
           </form>
