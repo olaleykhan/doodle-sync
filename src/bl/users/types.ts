@@ -14,7 +14,7 @@ export type SignupData = {
 export type UserAuthData =UserCredential['user'];
 
 export type UserProfile  = {
-    id?: string;
+    id: string;
     email?: string|null;
     photoURL?: string|null;
     displayName?: string|null;

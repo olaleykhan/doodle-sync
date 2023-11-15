@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { getAuth, createUserWithEmailAndPassword, UserCredential,  signInWithPopup, onAuthStateChanged, signOut, updateProfile, signInWithEmailAndPassword     } from "firebase/auth";
-import { createUser, getUserById } from '@/services/firebase/userServices';
+import { createUser, getAllUsers, getUserById } from '@/services/firebase/userServices';
 
 import {LOGIN, LOGOUT} from './auth-reducer/actions';
 import authReducer from './auth-reducer/auth';
@@ -25,7 +25,6 @@ const initialState: AuthProps = {
     useEffect(() => {
         onAuthStateChanged(auth, async (userCred) => {
             if (userCred) {
-              console.log("userCred", userCred.uid)
               const userDetails = await getUserById(userCred.uid);
 
               dispatch({
@@ -95,8 +94,6 @@ const initialState: AuthProps = {
       
         try {
             const user = auth.currentUser;
-
-            // console.log(user, "user from google", state.user, "state user")
             if (user) {
               await updateProfile(user,{photoURL: data.photoURL, displayName: data.displayName} );
             }
