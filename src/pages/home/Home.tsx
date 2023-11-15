@@ -24,11 +24,15 @@ import Controls from './Controls'
 import { DoodleDocumentDraft } from '@/bl/doodle/types'
 import { createDoodle } from '@/services/firebase/doodleService'
 import { useAuth } from '@/contexts/AuthContext'
+import { Alarm } from '@mui/icons-material'
+import { Alert } from '@mui/material'
+import Savepopup from './Savepopup'
 
 // ... (import statements)
 
 const Home = track(() => {
-
+const [showSavePopup, setShowSavePopup] = useState(false)
+const [loading, setLoading] = useState(false)
 	const { user } = useAuth()
 	const [store] = useState(() => {
 		const store = createTLStore({
@@ -43,15 +47,38 @@ const Home = track(() => {
 // }, [store])
 
 
-const handleSaveStore = async () => {
+const openSavePopup = () => {
+	setShowSavePopup(true)
+	console.log("saving doodle")
+}
+const handleSaveStore = async (name:string) => {
 	const snap = store.allRecords();
+	console.log("snap is : ", snap)
+
+	
 	const doodle:Omit<DoodleDocumentDraft, "createdAt"> = {
-		documentName: "My first doodle bybAlaf",
+		documentName: name,
 		userId: user?.id!,
 		sessionId: "lone",
 		doodle: snap
 	}
-	await createDoodle(doodle)
+	console.log(snap, "SNAP!!!! has doodle as : ", doodle);
+	if(snap.length>6){
+		try {
+			setLoading(true)
+			await createDoodle(doodle)
+			setShowSavePopup(false)
+		} catch (error) {
+			
+		}finally{
+			setLoading(false)
+		}
+		
+	}else{
+
+		alert("You can't save an empty doodle. if this is a bug, please contact us or try to raise a PR that fixes the bug")
+	}
+	// await createDoodle(doodle)
 
 }
 const handleShowHistory = () => {
@@ -66,7 +93,8 @@ const handleCreateRoom = () => {
 
 	return (
 		<div className="tldraw__editor">
-			<Tldraw autoFocus store={store} shareZone={<Controls onHistory={handleShowHistory} onStartRoom={handleCreateRoom} onClickSave={handleSaveStore} />} />
+			<Savepopup open={showSavePopup} setOpen={setShowSavePopup} handleSaveDocument={handleSaveStore} loading={loading}  />
+			<Tldraw autoFocus store={store} shareZone={<Controls onHistory={handleShowHistory} onStartRoom={handleCreateRoom} onClickSave={openSavePopup} />} />
 		</div>
 	);
 });
