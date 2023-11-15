@@ -2,18 +2,20 @@ import {useState} from 'react'
 import { Box, Modal, IconButton, Typography, Stack, Button, InputBase, Card, CardContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import Input from '@/components/base/Input';
-import { LoadingScreen } from '@tldraw/tldraw';
+import { LoadingScreen, TLStore, useEditor } from '@tldraw/tldraw';
 
 const Savepopup = ({open, setOpen, handleSaveDocument, loading}:{
     open: boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
-    handleSaveDocument: (docName: string) => void
+    handleSaveDocument: (docName: string, s:TLStore) => void
     loading: boolean
 }) => {
     const [documentName, setDocumentName] =useState<string>('');
+    const editor = useEditor();
+
     const handleSubmit = () => {
         console.log("is it workingn")
-        handleSaveDocument(documentName);
+        handleSaveDocument(documentName, editor.store);
     }
 
   return (

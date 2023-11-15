@@ -4,7 +4,7 @@ import {
     Outlet,
     
   } from "react-router-dom";
-import { Canvas, Home, Auth, ForgotPassword } from '../pages';
+import { Canvas, Home, Auth, ForgotPassword, History } from '../pages';
 import Screen from '@/layout/Screen';
 
 
@@ -17,6 +17,10 @@ import Screen from '@/layout/Screen';
           {
             path: '/',
             element: <Home />,
+          },
+          {
+            path:"/history",
+            element: <History />,
           },
           {
             path:"/draw/:roomId",
