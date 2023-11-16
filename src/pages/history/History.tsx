@@ -3,6 +3,8 @@ import { getAllDoodles } from "@/services/firebase/doodleService";
 import { DoodleDocument } from "@/bl/doodle/types";
 import { Box, Typography } from "@mui/material";
 import DoodleHistoryCard from "./components/DoodleHistoryCard";
+import Back from "./components/Back";
+import Canvas from "@/components/canvas/Canvas";
 
 
 export const useDoodles = (): DoodleDocument[] | undefined => {
@@ -25,7 +27,8 @@ export const useDoodles = (): DoodleDocument[] | undefined => {
 };
 
 
-const History = () => {
+const History = () => {  
+  const [selected, setSelected] = useState<DoodleDocument | undefined>(undefined);
     const doodles = useDoodles();
 
     if (!doodles) {
@@ -37,9 +40,20 @@ const History = () => {
   return (
    <Box>
     {
-      doodles.map((doodle) => (
-        <DoodleHistoryCard key={doodle.id} doc={doodle} />
-      ))
+
+      selected ?
+        <>
+        <Canvas id="" serializedStore={selected?.serializedStore}/>
+        <Back handleBack={() => setSelected(undefined)} />
+        </>
+      : 
+      <Box mx={4}>
+          {
+            doodles.map((doodle) => (
+              <DoodleHistoryCard key={doodle.id} doc={doodle} onClick={setSelected} />
+            ))
+          }
+         </Box>
     }
 
    </Box>

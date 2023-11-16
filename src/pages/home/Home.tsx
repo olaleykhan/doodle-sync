@@ -18,6 +18,8 @@ import { createDoodle } from '@/services/firebase/doodleService'
 import { useAuth } from '@/contexts/AuthContext'
 import Savepopup from './Savepopup'
 
+// TODO: clean up page. use central Canvas component. 
+
 
 const Home = () => {
 const [showSavePopup, setShowSavePopup] = useState(false)
@@ -32,11 +34,6 @@ const editor = useEditor();
 		store.loadSnapshot(DEFAULT_STORE)
 		return store
 	})
-
-// useEffect(()=>{
-// 	console.log("store for the TLDRAW is : ",store.getSnapshot()," typeof store is : ", typeof store.getSnapshot(), "type of store is : ", typeof store )
-// }, [store])
-
 
 const openSavePopup = () => {
 	setShowSavePopup(true)
@@ -71,8 +68,6 @@ const handleSaveStore = async (name:string, s:TLStore) => {
 
 		alert("You can't save an empty doodle. if this is a bug, please contact us or try to raise a PR that fixes the bug")
 	}
-	// await createDoodle(doodle)
-
 }
 const handleShowHistory = () => {
 	console.log("saving to history")
@@ -132,7 +127,7 @@ const handleMount = (editor:Editor) => {
 			<Box sx={{
 				position: 'absolute',
 				top: 0,
-				right: 0,
+				right: 40,
 				zIndex: 999,
 				p: 1
 

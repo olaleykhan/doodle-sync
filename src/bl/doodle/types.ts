@@ -9,7 +9,6 @@ export type DoodleDocumentDraft = {
     doodle: readonly TLRecord[]
     serializedStore?: SerializedStore<TLRecord>
     shot?: StoreSnapshot<TLRecord>
-    store?: TLStore
     metadata?: Record<string, any>
 
 }
