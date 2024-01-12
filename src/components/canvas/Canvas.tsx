@@ -21,10 +21,10 @@ import Controls from './Controls'
 
 
 type Props = {
-    id: string;
+    id?: string;
     serializedStore?: SerializedStore<TLRecord>
 }
-const Canvas:React.FC<Props> = ({serializedStore}) => {
+const Canvas:React.FC<Props> = ({id="", serializedStore}) => {
   const [showSavePopup, setShowSavePopup] = useState(false)
 const [loading, setLoading] = useState(false)
 const [currentShapes, setCurrentShapes] = useState<TLShape[]>([])
@@ -44,12 +44,13 @@ const { user } = useAuth()
   }
   const handleSaveStore = async (name:string, s:TLStore) => {
     const snap:TLRecord[] = store.allRecords();
+    console.log(snap, "SNAP!!!! has doodle as : ", name);
     
     const doodle:Omit<DoodleDocumentDraft, "createdAt"> = {
       documentName: name,
       userId: user?.id!,
       sessionId: "lone",
-      doodle: snap,
+      // doodle: snap,
       serializedStore: serializedStore?? store.serialize(),
       shot: store.getSnapshot(),
       // store:s,

@@ -4,7 +4,8 @@ import {
     Outlet,
     
   } from "react-router-dom";
-import { Canvas, Home, Auth, ForgotPassword, History } from '../pages';
+import {  Home, Auth, ForgotPassword, History } from '../pages';
+import Canvas from "@/components/canvas/Canvas";
 import Screen from '@/layout/Screen';
 
 
@@ -16,7 +17,7 @@ import Screen from '@/layout/Screen';
         children:[
           {
             path: '/',
-            element: <Home />,
+            element: <Canvas />,
           },
           {
             path:"/history",

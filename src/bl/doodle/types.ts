@@ -6,7 +6,7 @@ export type DoodleDocumentDraft = {
     userId: string
     sessionId: string
     createdAt: Timestamp
-    doodle: readonly TLRecord[]
+    // doodle: readonly TLRecord[]
     serializedStore?: SerializedStore<TLRecord>
     shot?: StoreSnapshot<TLRecord>
     metadata?: Record<string, any>

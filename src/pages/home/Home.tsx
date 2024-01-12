@@ -45,7 +45,7 @@ const handleSaveStore = async (name:string, s:TLStore) => {
 		documentName: name,
 		userId: user?.id!,
 		sessionId: "lone",
-		doodle: snap,
+		// doodle: snap,
 		serializedStore:store.serialize(),
 		shot: store.getSnapshot(),
 		// store:s,
